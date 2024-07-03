@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 
 async function main() {
   prisma.$use(async (params, next) => {
-    if (params.model == 'Animal') {
+    if (params.model == 'Jogo') {
       if (params.action == 'delete') {
         params.action = 'update'
         params.args['data'] = { deleted: true }
@@ -22,7 +22,7 @@ const router = Router()
 
 router.get("/", async (req, res) => {
   try {
-    const jogos = await prisma.animal.findMany({
+    const jogos = await prisma.jogo.findMany({
       where: { deleted: false }
     })
     res.status(200).json(jogos)
@@ -41,10 +41,10 @@ router.post("/", verificaToken, async (req: any, res) => {
   }
 
   try {
-    const animal = await prisma.animal.create({
+    const jogo = await prisma.jogo.create({
       data: { nome, genero, preco, usuarioId: userLogadoId }
     })
-    res.status(201).json(animal)
+    res.status(201).json(jogo)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -54,7 +54,7 @@ router.delete("/:id", verificaToken, async (req: any, res) => {
   const { id } = req.params
 
   try {
-    const animal = await prisma.animal.delete({
+    const jogo = await prisma.jogo.delete({
       where: { id: Number(id) }
     })
 
@@ -66,7 +66,7 @@ router.delete("/:id", verificaToken, async (req: any, res) => {
       }
     })
 
-    res.status(200).json(animal)
+    res.status(200).json(jogo)
   } catch (error) {
     res.status(400).json(error)
   }
@@ -82,11 +82,11 @@ router.put("/:id", verificaToken, async (req, res) => {
   }
 
   try {
-    const animal = await prisma.animal.update({
+    const jogo = await prisma.jogo.update({
       where: { id: Number(id) },
       data: { nome, genero, preco }
     })
-    res.status(200).json(animal)
+    res.status(200).json(jogo)
   } catch (error) {
     res.status(400).json(error)
   }
