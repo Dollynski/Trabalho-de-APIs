@@ -73,6 +73,21 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(400).json(error)
   }
+
+  // Verificação de Email já existente
+
+  try {
+    const usuarioExistente = await prisma.usuario.findUnique({
+      where: { email: email }
+    });
+
+    if (usuarioExistente) {
+      res.status(400).json({ erro: "Email já cadastrado" });
+      return;
+    }
+  } catch (error) {
+    res.status(400).json(error)
+  }
 })
 
 export default router
