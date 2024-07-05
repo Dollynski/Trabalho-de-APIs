@@ -1,0 +1,19 @@
+meta {
+  name: Cadastro de Usuários
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/usuarios
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "nome": "Israel",
+    "email": "isra@gmail.com",
+    "senha": "Senha#123"
+  }
+}

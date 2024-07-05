@@ -1,0 +1,23 @@
+meta {
+  name: Inclusão de Jogos
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/jogos
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTG9nYWRvSWQiOjEsInVzZXJMb2dhZG9Ob21lIjoiR2Vyc29uIiwiaWF0IjoxNzIwMjE2Njk4LCJleHAiOjE3MjAyMjAyOTh9.VGkGOG2gbKqcOFVUy6b_S_0GkAyzTgUSk_f7RH4ipzI
+}
+
+body:json {
+  {
+    "nome": "Forza 4",
+    "genero": "Corrida",
+    "preco": "50"
+  }
+}
