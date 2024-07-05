@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
 })
 
 function validaSenha(senha: string) {
-
   const mensa: string[] = []
 
   if (senha.length < 8) {
@@ -62,29 +61,24 @@ router.post("/", async (req, res) => {
     return
   }
 
-  const salt = bcrypt.genSaltSync(12)
-  const hash = bcrypt.hashSync(senha, salt)
-
-  try {
-    const usuario = await prisma.usuario.create({
-      data: { nome, email, senha: hash }
-    })
-    res.status(201).json(usuario)
-  } catch (error) {
-    res.status(400).json(error)
-  }
-
-  // Verificação de Email já existente
-
   try {
     const usuarioExistente = await prisma.usuario.findUnique({
       where: { email: email }
-    });
+    })
 
     if (usuarioExistente) {
-      res.status(400).json({ erro: "Email já cadastrado" });
-      return;
+      res.status(400).json({ erro: "Email já cadastrado" })
+      return
     }
+
+    const salt = bcrypt.genSaltSync(12)
+    const hash = bcrypt.hashSync(senha, salt)
+
+    const usuario = await prisma.usuario.create({
+      data: { nome, email, senha: hash }
+    })
+    
+    res.status(201).json(usuario)
   } catch (error) {
     res.status(400).json(error)
   }
